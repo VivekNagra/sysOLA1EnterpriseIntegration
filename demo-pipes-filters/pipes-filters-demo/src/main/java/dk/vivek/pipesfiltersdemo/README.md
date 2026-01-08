@@ -1,13 +1,17 @@
 # Pipes & Filters Demo (Spring Boot)
 
 ## Run
+Requirements:
+- JDK 21 installed
+
+Start the application:
 ```powershell
-.\gradlew.bat bootRun
+.\mvnw.cmd spring-boot:run
 ```
 App runs on http://localhost:8080.
 
-##Test
-PowerShell (recommended):
+## Test
+PowerShell:
 ```powershell
 $body = @{
   orderId    = "O-1001"

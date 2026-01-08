@@ -76,7 +76,7 @@ The demo exposes a REST endpoint **POST /api/process** that executes a pipeline 
 
 This demonstrates the Pipes & Filters pattern by decomposing processing steps into independent components that can be composed and extended.
 
-**Run:** .\gradlew.bat bootRun
+**Run:** `.\mvnw.cmd spring-boot:run`
 
 **Test:** 
 ```powershell
@@ -92,7 +92,7 @@ Invoke-RestMethod -Method Post `
   -ContentType "application/json" `
   -Body $body
 ```
-For full run and test instructions, læs : demo-pipes-filters/pipes-filters-demo/README.md
+For full run and test instructions, læs : `demo-pipes-filters/pipes-filters-demo/README.md`
 
 ## 6. Diagramming standards and tools
 
