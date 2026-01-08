@@ -1,4 +1,4 @@
-# 5-minute video script (OLA1)
+# 5-minute video script (OLA1) - dispostition til videoen max 5 min. 
 
 ## 0:00–0:30 Intro
 ## 0:30–1:30 Integration styles
