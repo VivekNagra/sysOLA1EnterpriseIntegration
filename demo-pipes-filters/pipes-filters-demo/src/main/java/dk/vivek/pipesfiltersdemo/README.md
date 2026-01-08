@@ -9,8 +9,9 @@ Start the application:
 .\mvnw.cmd spring-boot:run
 ```
 App runs on http://localhost:8080.
+now open ANOTHER terminal window and run the test (you can just copy and paste the powersheeeell commands below) 
 
-## Test
+## Test, please make sure 
 PowerShell:
 ```powershell
 $body = @{
@@ -26,5 +27,5 @@ Invoke-RestMethod -Method Post `
   -Body $body
 ```
 Expected behavior:
-- item is normalized (trim + uppercase)
+- item is normalized
 - riskLevel is derived from quantity
