@@ -3,7 +3,7 @@ OLA1 i system integration
 
 
 ## Structure
-- `report/` Markdown report (max 8 sides)
-- `demo-pipes-filters/` Spring Boot demo implementing Pipes & Filters
-- `diagrams/` Mermaid or exported diagrams
-- `docs/` video script and notes
+- `report/` this folder contains the REPORT.md file, which is my report for the OLA hand-in.
+- `demo-pipes-filters/` Spring Boot demo implementing Pipes & Filters. Please read the README.md to see how you can try the filtering. 
+- `diagrams/` I have used Mermaid in the report itself which you can check out in the /report folder. 
+
