@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/IntDev.iml" filepath="$PROJECT_DIR$/.idea/IntDev.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sysOLA1EnterpriseIntegration.iml" filepath="$PROJECT_DIR$/.idea/sysOLA1EnterpriseIntegration.iml" />
     </modules>
   </component>
 </project>
