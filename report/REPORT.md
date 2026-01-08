@@ -18,9 +18,9 @@ A common starting point for integration is point-to-point communication, where o
 
 An alternative is hub-based integration, historically associated with the Enterprise Service Bus (ESB). In this approach a central component handles mediation tasks such as routing, transformation, protocol bridging, and orchestration. ESB can improve visibility and governance, but it can also become a bottleneck and a single point where too much logic accumulates. In practice, many organisations have moved away from “smart bus” designs toward decentralised integration, where services own their contracts and integration responsibilities are distributed across teams.
 
-API-led integration is a modern approach where systems expose capabilities through well-defined APIs and are typically fronted by an API gateway. The gateway provides cross-cutting concerns such as authentication, rate limiting, request validation, and monitoring, while the services themselves implement domain logic. API-led integration works well for synchronous request/response use cases, particularly when the caller needs immediate feedback (e.g., placing an order or fetching a customer profile).
+API-led integration is a modern approach where systems expose capabilities through well-defined APIs and are typically fronted by an API gateway. The gateway provides cross-cutting concerns such as authentication, rate limiting, request validation, and monitoring, while the services themselves implement domain logic. This style commonly maps to the EIP **Request-Reply** pattern, where a client sends a request and expects an immediate response. API-led integration works well for synchronous use cases, particularly when the caller needs immediate feedback (e.g., placing an order or fetching a customer profile).
 
-Event-driven integration complements APIs by enabling asynchronous communication. Instead of calling a service directly, systems publish events (facts about something that happened), and other systems subscribe to those events. This reduces temporal coupling and improves scalability, but introduces additional complexity: eventual consistency, out-of-order delivery, idempotency, and debugging across asynchronous flows. In practice, real enterprise systems often combine these styles, using APIs for synchronous user flows and events for cross-system propagation and integration.
+Event-driven integration complements APIs by enabling asynchronous communication. Instead of calling a service directly, systems publish events (facts about something that happened), and other systems subscribe to those events. This style commonly maps to the EIP **Publish-Subscribe** pattern and reduces temporal coupling and improves scalability, but introduces additional complexity: eventual consistency, out-of-order delivery, idempotency, and debugging across asynchronous flows. In practice, real enterprise systems often combine these styles, using APIs for synchronous user flows and events for cross-system propagation and integration.
 
 ## 4. Enterprise Integration Patterns (EIP)
 Enterprise Integration Patterns (EIP) describe reusable solutions to recurring integration problems in messaging systems and distributed architectures. Patterns are valuable in enterprise settings because integration problems tend to repeat across projects: systems need to validate, transform, enrich, and route messages; they must cope with failures and retries; and they must remain observable and governable as they evolve. Using a common pattern vocabulary improves communication between developers and architects and supports consistent design decisions.
@@ -53,10 +53,13 @@ sequenceDiagram
   C->>API: POST /api/process (OrderRequest)
   API->>P: process(request)
   P->>V: apply(request)
+  Note over V: Domain validation (e.g., quantity bound)
   V-->>P: validated request
   P->>T: apply(request)
+  Note over T: Normalize item (trim + uppercase)
   T-->>P: transformed request
   P->>E: apply(request)
+  Note over E: Derive riskLevel from quantity
   E-->>P: OrderResult
   P-->>API: OrderResult
   API-->>C: 200 OK (OrderResult)
@@ -67,6 +70,9 @@ The demo exposes a REST endpoint **POST /api/process** that executes a pipeline 
 - ValidateFilter performs domain rule validation (example: a quantity upper bound).
 - TransformFilter normalises the item field (trim + uppercase).
 - EnrichFilter enriches the message with a derived attribute riskLevel based on quantity.
+
+**Idempotency note:** In enterprise integration, pipelines should be designed so that repeated delivery of the same message does not create unintended side effects. This demo is naturally *idempotent* because it does not persist state or trigger external side effects; posting the same `OrderRequest` twice results in the same logical output (apart from the `processedAt` timestamp). In a real system, idempotency would typically be enforced using an idempotency key (e.g., `orderId`) combined with a store/check at the boundary of the pipeline to prevent duplicate processing.
+
 
 This demonstrates the Pipes & Filters pattern by decomposing processing steps into independent components that can be composed and extended.
 
