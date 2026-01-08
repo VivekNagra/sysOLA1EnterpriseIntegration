@@ -30,6 +30,18 @@ flowchart LR
   F2 --> F3[Filter: Enrich]
   F3 --> B[Output]
 ```
+### 5.3 Implementation (Spring Boot)
+The demo exposes a REST endpoint `POST /api/process` that executes a pipeline consisting of three filters:
+
+1. **ValidateFilter**: domain rule validation (e.g., quantity upper bound)
+2. **TransformFilter**: normalizes `item` (trim + uppercase)
+3. **EnrichFilter**: enriches the message with a derived attribute `riskLevel` based on `quantity`
+
+This demonstrates the **Pipes & Filters** pattern by decomposing processing steps into independent components that can be composed and extended.
+
+**Run:** `.\gradlew.bat bootRun`  
+**Test:** see `demo-pibes-filters/pipes-filters-demo/pibesfiltersdemo/README.md`
+
 
 # 6.
 - UML
